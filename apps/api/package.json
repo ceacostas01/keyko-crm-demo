@@ -1,0 +1,30 @@
+{
+  "name": "@keyko/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "demo": "tsx scripts/demo.ts",
+    "ai:eval": "tsx scripts/eval-ai.ts",
+    "create-admin": "tsx scripts/create-admin.ts",
+    "seed-fictional": "tsx scripts/seed-fictional.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@keyko/db": "workspace:*",
+    "@keyko/domain": "workspace:*",
+    "@libsql/client": "^0.18.0",
+    "drizzle-orm": "^0.45.4",
+    "hono": "^4.13.14",
+    "jose": "^6.2.14",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.0",
+    "vitest": "^5.0.5"
+  }
+}

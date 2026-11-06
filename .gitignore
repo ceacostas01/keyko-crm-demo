@@ -1,0 +1,31 @@
+# Dependencias
+node_modules/
+.pnpm-store/
+
+# Builds
+dist/
+.wrangler/
+.output/
+
+# Credenciales y entorno local
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+*.pem
+*.key
+
+# Bases locales de desarrollo
+*.local.db
+*.local.db-journal
+*.local.db-wal
+*.local.db-shm
+.local/
+
+# Respaldos
+backups/
+*.sql.dump
+
+# Sistema
+.DS_Store

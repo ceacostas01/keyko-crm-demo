@@ -1,0 +1,41 @@
+#:schema node_modules/wrangler/config-schema.json
+# Entorno aislado de pruebas. No es producción.
+#
+#   wrangler deploy -c wrangler.staging.toml
+#   wrangler secret put TURSO_AUTH_TOKEN --name keyko-crm-api-staging
+#   wrangler secret put JWT_SECRET --name keyko-crm-api-staging
+#   wrangler secret put AI_API_KEY --name keyko-crm-api-staging
+#
+# Los valores marcados REPLACE se completan al crear los recursos.
+name = "keyko-crm-api-staging"
+main = "src/index.ts"
+compatibility_date = "2026-10-30"
+workers_dev = true
+
+[vars]
+TURSO_DATABASE_URL = "libsql://REPLACE-keyko-crm-staging.turso.io"
+ALLOWED_ORIGINS = "https://REPLACE-keyko-crm-staging.pages.dev"
+
+# IA apagada hasta que la prueba integral lo requiera.
+AI_ENABLED = "false"
+AI_PROVIDER = "openrouter"
+AI_MODEL = "openai/gpt-4o-mini"
+AI_AUTO_APPLY = "false"
+AI_MAX_OUTPUT_TOKENS = "800"
+AI_MAX_ATTEMPTS = "3"
+AI_DAILY_BUDGET_USD_MICROS = "100000"
+AI_MONTHLY_BUDGET_USD_MICROS = "5000000"
+AI_STORE_RAW_RESPONSE = "false"
+AI_RAW_RETENTION_DAYS = "7"
+AI_SUGGESTION_RETENTION_DAYS = "180"
+AI_USAGE_RETENTION_DAYS = "180"
+
+PHOTO_MAX_BYTES = "5242880"
+PHOTO_URL_TTL_SECONDS = "900"
+
+[[r2_buckets]]
+binding = "PHOTOS"
+bucket_name = "TU-BUCKET-R2-STAGING"
+
+[observability]
+enabled = true

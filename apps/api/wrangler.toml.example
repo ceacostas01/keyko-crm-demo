@@ -1,0 +1,64 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "keyko-crm-api"
+main = "src/index.ts"
+compatibility_date = "2026-10-30"
+workers_dev = true
+
+# La URL de Turso no es secreta, pero el token sí:
+#   wrangler secret put TURSO_AUTH_TOKEN
+#   wrangler secret put JWT_SECRET
+#   wrangler secret put AI_API_KEY
+[vars]
+TURSO_DATABASE_URL = "libsql://TU-BASE.turso.io"
+# Sin comodines. Cambiar por el dominio del frontend al publicarlo.
+ALLOWED_ORIGINS = "http://localhost:5173"
+
+# IA activa para todos los contactos. Usa AI_TEST_CONTACTS para limitar pruebas.
+AI_ENABLED = "true"
+AI_PROVIDER = "openrouter"
+AI_MODEL = "openai/gpt-4o-mini"
+AI_AUTO_APPLY = "false"
+AI_AUTO_CREATE_PETS = "true"
+AI_VERIFY_PET_CANDIDATES = "true"
+AI_VISION_ENABLED = "true"
+AI_VISION_MODEL = "openai/gpt-4o-mini"
+AI_VISION_MAX_IMAGE_BYTES = "4000000"
+AI_TRANSCRIPTION_ENABLED = "true"
+AI_TRANSCRIPTION_MODEL = "openai/gpt-4o-mini-transcribe"
+AI_TRANSCRIPTION_LANGUAGE = "es"
+AI_TRANSCRIPTION_MAX_BYTES = "20000000"
+AI_TRANSCRIPTION_MAX_SECONDS = "300"
+AI_TRANSCRIPTION_TIMEOUT_MS = "45000"
+AI_TRANSCRIPTION_MAX_ATTEMPTS = "3"
+AI_TRANSCRIPTION_RETENTION_DAYS = "180"
+AI_AUTO_CREATE_APPOINTMENT_REQUESTS = "true"
+AI_AUTO_CONFIRM_APPOINTMENTS = "false"
+AI_AUTO_PROCESS = "true"
+AI_TEST_CONTACTS = ""
+AI_STARTED_AT = "2026-11-02T22:30:00Z"
+AI_MAX_OUTPUT_TOKENS = "1600"
+AI_MAX_ATTEMPTS = "3"
+AI_DAILY_BUDGET_USD_MICROS = "100000"
+AI_MONTHLY_BUDGET_USD_MICROS = "5000000"
+AI_STORE_RAW_RESPONSE = "false"
+AI_RAW_RETENTION_DAYS = "7"
+AI_SUGGESTION_RETENTION_DAYS = "180"
+AI_USAGE_RETENTION_DAYS = "180"
+
+PHOTO_MAX_BYTES = "5242880"
+PHOTOS_REQUIRED = "true"
+PHOTO_URL_TTL_SECONDS = "900"
+
+# Bucket privado de fotografías.
+[[r2_buckets]]
+binding = "PHOTOS"
+bucket_name = "TU-BUCKET-R2"
+
+[observability]
+enabled = true
+
+# Cron cada 2 minutos: lee mensajes nuevos de Turso y procesa IA sin tocar
+# el webhook de Kapso. No hay colas externas.
+
+[triggers]
+crons = ["*/2 * * * *"]
